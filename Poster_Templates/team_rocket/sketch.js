@@ -1,10 +1,20 @@
 let font;
-let img_0, img_1, img_2, img_3, img_4, img_5, img_6, img_7, img_8, img_9;
+let digits = [];
 
 function preload() {
     // load the font
+    digits[0] = loadImage('./assets/2.svg');
+    digits[1] = loadImage('./assets/2.svg');
+    digits[2] = loadImage('./assets/2.svg');
+    digits[3] = loadImage('./assets/2.svg');
+    digits[4] = loadImage('./assets/2.svg');
+    digits[5] = loadImage('./assets/2.svg');
+    digits[6] = loadImage('./assets/2.svg');
+    digits[7] = loadImage('./assets/2.svg');
+    digits[8] = loadImage('./assets/2.svg');
+    digits[9] = loadImage('./assets/2.svg');
+
     font = loadFont('barlow_condensed.otf');
-    img_2 = loadImage('./assets/SVG/2.svg');
 }
 function setup() {
   /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight()); // Don't remove this line. 
@@ -16,43 +26,7 @@ function draw() {
     background(0, 0, 0, 20);
     fill(255);
 /*important!*/ poster.posterTasks(); // do not remove this last line!  
-
-    switch (poster.getCounter()) {
-        case 0:
-            drawImgLetter(img_2)
-            break;
-        case 1:
-            drawImgLetter(img_2)
-            break;
-        case 2:
-            drawImgLetter(img_2)
-            break;
-        case 3:
-            drawImgLetter(img_2)
-            break;
-        case 4:
-            drawImgLetter(img_2)
-            break;
-        case 5:
-            drawImgLetter(img_2)
-            break;
-        case 6:
-            drawImgLetter(img_2)
-            break;
-        case 7:
-            drawImgLetter(img_2)
-            break;
-        case 8:
-            drawImgLetter(img_2)
-            break;
-        case 9:
-            drawImgLetter(img_2)
-            break;
-        default:
-            drawImgLetter(img_2)
-            break;
-    }
-
+    drawImgLetter(digits[poster.getCounter()]);
 }
 
 function windowScaled() { // this is a custom event called whenever the poster is scaled
@@ -68,8 +42,8 @@ function drawImgLetter(img) {
     let xMorph = map(poster.posNormal.x, -1, 1, -width, width)
 
     // morph shape based on osc
-    let height = map(osc, 0, 1, 0, width / 2)
+    let h = map(osc, 0, 1, img.height * 5, img.height * 6)
 
-    image(img, xPos, height, xMorph, height);
+    image(img, xPos, height / 2 - h / 2, xMorph, h);
     pop()
 }
