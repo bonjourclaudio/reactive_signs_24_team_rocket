@@ -23,7 +23,7 @@ function setup() {
 }
 
 function draw() {
-    background(0, 0, 0, 20);
+    background(0);
     fill(255);
 /*important!*/ poster.posterTasks(); // do not remove this last line!  
     drawImgLetter(digits[poster.getCounter()]);
@@ -34,10 +34,15 @@ function windowScaled() { // this is a custom event called whenever the poster i
 }
 
 function drawImgLetter(img) {
+
+
+    let yOscillation = map(sin(frameCount * 0.05), -1, 1, 0.8, 1.1);
+    let xOscillation = map(sin(frameCount * 0.05), -1, 1, 0.5, 1.5);
+
     let distanceFromCenter = abs(poster.posNormal.x - 0.5) * 2;
     let squeezeFactor = map(distanceFromCenter, 0, 1, 1, 0.1);
-    let letterWidth = width * squeezeFactor;
-    let letterHeight = height;
+    let letterWidth = width * squeezeFactor * xOscillation;
+    let letterHeight = height * yOscillation;
 
     let xPos = map(poster.posNormal.x, 0, 1, letterWidth / 2, width - letterWidth / 2);
 
