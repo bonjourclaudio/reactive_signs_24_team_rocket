@@ -3,16 +3,16 @@ let digits = [];
 
 function preload() {
     // load the font
-    digits[0] = loadImage('./assets/2.svg');
-    digits[1] = loadImage('./assets/2.svg');
-    digits[2] = loadImage('./assets/2.svg');
-    digits[3] = loadImage('./assets/2.svg');
-    digits[4] = loadImage('./assets/2.svg');
-    digits[5] = loadImage('./assets/2.svg');
-    digits[6] = loadImage('./assets/2.svg');
-    digits[7] = loadImage('./assets/2.svg');
-    digits[8] = loadImage('./assets/2.svg');
-    digits[9] = loadImage('./assets/2.svg');
+    digits[0] = loadImage('./assets/3.png');
+    digits[1] = loadImage('./assets/3.png');
+    digits[2] = loadImage('./assets/3.png');
+    digits[3] = loadImage('./assets/3.png');
+    digits[4] = loadImage('./assets/3.png');
+    digits[5] = loadImage('./assets/3.png');
+    digits[6] = loadImage('./assets/3.png');
+    digits[7] = loadImage('./assets/3.png');
+    digits[8] = loadImage('./assets/3.png');
+    digits[9] = loadImage('./assets/3.png');
 
     font = loadFont('barlow_condensed.otf');
 }
@@ -34,16 +34,14 @@ function windowScaled() { // this is a custom event called whenever the poster i
 }
 
 function drawImgLetter(img) {
-    push()
+    let distanceFromCenter = abs(poster.posNormal.x - 0.5) * 2;
+    let squeezeFactor = map(distanceFromCenter, 0, 1, 1, 0.1);
+    let letterWidth = width * squeezeFactor;
+    let letterHeight = height;
 
-    let osc = map(sin(frameCount * 0.1), -1, 1, 0, 1)
+    let xPos = map(poster.posNormal.x, 0, 1, letterWidth / 2, width - letterWidth / 2);
 
-    let xPos = map(poster.posNormal.x, -1, 1, -width / 2, width / 2)
-    let xMorph = map(poster.posNormal.x, -1, 1, -width, width)
 
-    // morph shape based on osc
-    let h = map(osc, 0, 1, img.height * 5, img.height * 6)
-
-    image(img, xPos, height / 2 - h / 2, xMorph, h);
-    pop()
+    imageMode(CENTER);
+    image(img, xPos, height / 2, letterWidth, letterHeight);
 }
