@@ -7,6 +7,7 @@ function setup() {
   /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight()); // Don't remove this line. 
  /*important!*/ poster.setup(this, "/Poster_Templates/libraries/assets/models/movenet/model.json");  // Don't remove this line. 
   textFont(font);
+  strokeWeight(3)
 }
 
 function draw() {
