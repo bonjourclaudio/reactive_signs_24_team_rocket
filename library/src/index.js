@@ -12,7 +12,7 @@ let Settings = {
 }
 
 let webCamWrapper;
-let currentNumber = 0;
+let currentNumber = 9;
 
 const pageWidth = 1080; // resolution 
 const pageHeight = 1920; // resolution 
@@ -42,12 +42,13 @@ let fpsAverage = 0;
 let enableDepth = false;
 let animationLoopEnabled = true;
 let exhibitionMode = false;
+let manualCounter = false;
 export function setDebug(value) {
   debug = value;
 }
 
 export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled) {
-  console.log("P5 vesrion"+P5.VERSION);
+  console.log("P5 vesrion" + P5.VERSION);
   recordSetup();
 
   if (_enableDepth != undefined) {
@@ -57,7 +58,7 @@ export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled)
     setUpOSC(false)
   }
   if (_animationLoopEnabled != undefined) {
-     animationLoopEnabled = _animationLoopEnabled;
+    animationLoopEnabled = _animationLoopEnabled;
   }
   POSE_CONFIG.modelUrl = modelURL;
   console.log(POSE_CONFIG.modelUrl);
@@ -109,15 +110,16 @@ export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled)
 
       // handle counter 
 
-       if (pressed.has("ArrowUp")) {
+      if (pressed.has("ArrowUp")) {
         // cancel incrementCounter interval and increase counter by 1
         clearInterval(incrementCounterInterval);
         incrementCounter();
+        manualCounter = true;
       } else if (pressed.has("ArrowDown")) {
         clearInterval(incrementCounterInterval);
         deincrementCounter();
+        manualCounter = true;
       }
-
 
     }
   }
@@ -237,22 +239,22 @@ function cameraRestore() {
 }
 
 function incrementCounter() {
-  if (currentNumber>0) {
-   currentNumber--;
-  } else {
-    currentNumber = 9;
-  }
+    if (currentNumber > 0) {
+      currentNumber--;
+    } else {
+      currentNumber = 9;
+    }
 }
 function deincrementCounter() {
-  if (currentNumber<9) {
-   currentNumber++;
-  } else {
-    currentNumber = 0;
-  }
+    if (currentNumber < 9) {
+      currentNumber++;
+    } else {
+      currentNumber = 0;
+    }
 }
 
 export function getCounter() {
-  return currentNumber; 
+  return currentNumber;
 }
 
 
@@ -271,7 +273,7 @@ export function posterTasks() {
       depthH = OSCdepthH; // width of height array
     }
 
-  } else  {
+  } else {
     oscSignal = false;
     // or just use mouse
     let mouseX = mainP5Sketch.mouseX / mainP5Sketch.width;
@@ -279,10 +281,10 @@ export function posterTasks() {
     let mouseY = mainP5Sketch.mouseY / mainP5Sketch.height;
     mouseY = mainP5Sketch.constrain(mouseY, 0, 1)
     updatePosition(mouseX, mouseY, 1.0)
-  } 
+  }
   // light animation when tracking is false
   if (animationLoopEnabled && tracking != true && oscSignal == true) {
-    let oscolation = 0.08 * sin(mainP5Sketch.frameCount / (mainP5Sketch.PI*50));
+    let oscolation = 0.08 * sin(mainP5Sketch.frameCount / (mainP5Sketch.PI * 50));
     updatePosition(.5 + oscolation, .5, 1.0)
   }
   // show helplines when outside of fullscreen mode
@@ -317,7 +319,7 @@ export function posterTasks() {
     }
     // Format lines for 2024, show squate in the center. 
 
-    let line1y = (mainP5Sketch.height-mainP5Sketch.width)/2;
+    let line1y = (mainP5Sketch.height - mainP5Sketch.width) / 2;
     let line2y = line1y + mainP5Sketch.width;
     mainP5Sketch.line(screens[0].x, line1y, screens[0].x + screens[0].w, line1y); // top    
     mainP5Sketch.line(screens[0].x, line2y, screens[0].x + screens[0].w, line2y); // top    
@@ -475,7 +477,7 @@ function openFullscreen() {
 
 
 // Listen for messages from the parent window, used for exhibition setup
-window.addEventListener('message', function(event) {
+window.addEventListener('message', function (event) {
   // Ensure the message is coming from a trusted source
   /*
   if (event.origin !== 'http://your-parent-origin.com') {
@@ -490,5 +492,19 @@ window.addEventListener('message', function(event) {
     exhibitionMode = message.data.value;
     console.log('Exhibition mode:', exhibitionMode);
     // Access properties like message.data.property1, message.data.property2, etc.
+  }
+  if (message.type === 'countUp') {
+    // pass incoming value as integer
+    if(!manualCounter)  {
+      clearInterval(incrementCounterInterval);
+      incrementCounter();
+    }
+  }
+  if (message.type === 'countDown') {
+    // pass incoming value as integer
+    if(!manualCounter)  {
+      clearInterval(incrementCounterInterval);
+      deincrementCounter();
+    }
   }
 });

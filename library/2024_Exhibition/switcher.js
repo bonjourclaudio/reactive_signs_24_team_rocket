@@ -10,10 +10,12 @@ let intervalTime = 240000; //4 minutes
 let trackingActive = false;
 let streaming = false;
 let demoMode = false
+let incrementCounterInterval;
 
 // event when page is finished loading
 window.onload = function () {
   updateIframes();
+  incrementCounterInterval = setInterval(incrementCounterDown, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
 }
 
 
@@ -103,8 +105,61 @@ function changePoster(posterNo) {
     iframe2.onload = function () {
       updateIframes();
     }
+  // handling counting 
+    clearInterval(incrementCounterInterval);
+    incrementCounterInterval = setInterval(incrementCounterDown, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
+
   }
 }
+
+function incrementCounterDown() {
+  let iframe1 = document.getElementById('screen1');
+  let iframe2 = document.getElementById('screen2');
+
+  let message = {
+    type: 'countDown',
+    data: {
+      value: true,
+    }
+  };
+
+  iframe1.contentWindow.postMessage(message, '*');
+  iframe2.contentWindow.postMessage(message, '*');
+  console.log("incrementing counter")
+}
+function incrementCounterUp() {
+  let iframe1 = document.getElementById('screen1');
+  let iframe2 = document.getElementById('screen2');
+
+  let message = {
+    type: 'countUp',
+    data: {
+      value: true,
+    }
+  };
+
+  iframe1.contentWindow.postMessage(message, '*');
+  iframe2.contentWindow.postMessage(message, '*');
+  console.log("incrementing counter")
+}
+
+
+// keyPress event
+document.addEventListener('keydown', function (event) {
+
+  // if uparrow used, increment counter
+  if (event.code == "ArrowUp") {
+    clearInterval(incrementCounterInterval);
+    incrementCounterUp();
+    }
+  // if downarrow used, decrement counter
+  if (event.code == "ArrowDown") {
+    clearInterval(incrementCounterInterval);
+    incrementCounterDown();
+    }
+  }
+);
+
 
 function pickPoster(number) {
   // for keyboard selection during testing
@@ -129,7 +184,6 @@ function transition(posterNo) {
   } catch (e) {
     console.log("transition failed " + e)
   }
-
 }
 
 
@@ -195,3 +249,12 @@ function fadeIn(el) {
   }
   next();
 }
+
+// Listen for click events in the parent window
+window.addEventListener('click', function(event) {
+  console.log('Click detected in parent window');
+  // make fullscreen
+  document.documentElement.requestFullscreen();
+  
+
+});
