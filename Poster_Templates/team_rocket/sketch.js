@@ -1,41 +1,56 @@
-let font;
+let obj, img, font;
 let digits = [];
 
 function preload() {
-    // load the font
-    digits[0] = loadImage('./assets/3.png');
-    digits[1] = loadImage('./assets/3.png');
-    digits[2] = loadImage('./assets/3.png');
-    digits[3] = loadImage('./assets/3.png');
-    digits[4] = loadImage('./assets/3.png');
-    digits[5] = loadImage('./assets/3.png');
-    digits[6] = loadImage('./assets/3.png');
-    digits[7] = loadImage('./assets/3.png');
-    digits[8] = loadImage('./assets/3.png');
-    digits[9] = loadImage('./assets/3.png');
+    obj = loadModel('./assets/spike.obj');
+    img = loadImage('./assets/img.gif');
+
+    for (let i = 0; i < 10; i++) {
+        digits[i] = loadImage('./assets/' + 3 + '.png'); // hardcode 3 for now
+    }
 
     font = loadFont('barlow_condensed.otf');
 }
+
 function setup() {
-  /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight()); // Don't remove this line. 
+  /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight(), WEBGL); // Don't remove this line. 
  /*important!*/ poster.setup(this, "/Poster_Templates/libraries/assets/models/movenet/model.json");  // Don't remove this line. 
-    textFont("Maax Mono");
+    textFont(font);
 }
 
 function draw() {
     background(0);
-    fill(255);
-/*important!*/ poster.posterTasks(); // do not remove this last line!  
+
+    let targetX, targetY = 0;
+
+    //let targetX = constrain(mouseX - width / 2, -width / 2 + 750, width / 2 - 750);
+    //let targetY = constrain(mouseY - height / 2, -height / 2 + 300, height / 2 - 300);
+
+    drawSpikes(targetX, targetY);
     drawImgLetter(digits[poster.getCounter()]);
+
+    /*important!*/ poster.posterTasks(); // do not remove this last line!  
 }
 
 function windowScaled() { // this is a custom event called whenever the poster is scaled
     // textSize(10 * poster.vw);
+    if (_renderer.drawingContext instanceof WebGLRenderingContext) {
+    }
+}
+
+function drawSpikes(targetX, targetY) {
+    scale(10);
+    imageLight(img);
+    specularMaterial(50);
+    shininess(200);
+    metalness(50);
+    rotateX(frameCount * 0.001);
+    rotateY(frameCount * 0.001);
+    fill(255, 100);
+    model(obj);
 }
 
 function drawImgLetter(img) {
-
-
     let yOscillation = map(sin(frameCount * 0.05), -1, 1, 0.8, 1.1);
     let xOscillation = map(sin(frameCount * 0.05), -1, 1, 0.5, 1.5);
 
