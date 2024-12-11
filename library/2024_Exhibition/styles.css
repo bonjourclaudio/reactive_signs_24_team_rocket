@@ -4,7 +4,7 @@ body {
     margin:
       0;
     background:
-      #0000ff;
+      #000000;
     height: 100%;
     position:relative;
     overflow: hidden;
@@ -15,6 +15,7 @@ body {
 .posterFrame {
   position:relative; 
   height:100%; 
+  width:100%; 
   border:none; 
   margin:0; 
   padding:0; 

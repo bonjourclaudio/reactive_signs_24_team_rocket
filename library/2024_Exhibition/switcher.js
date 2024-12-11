@@ -15,7 +15,7 @@ let incrementCounterInterval;
 // event when page is finished loading
 window.onload = function () {
   updateIframes();
-  incrementCounterInterval = setInterval(incrementCounterDown, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
+ // incrementCounterInterval = setInterval(incrementCounterDown, 2000); // Call incrementCounter every 1000 milliseconds (1 second)
 }
 
 
@@ -28,10 +28,10 @@ function updateIframes() {
     }
   };
   let iframe1 = document.getElementById('screen1');
-  let iframe2 = document.getElementById('screen2');
+//  let iframe2 = document.getElementById('screen2');
   // Send the object to the iframe
   iframe1.contentWindow.postMessage(message, '*');
-  iframe2.contentWindow.postMessage(message, '*');
+ // iframe2.contentWindow.postMessage(message, '*');
 }
 
 function trackingCallback(keyCode) {
@@ -96,25 +96,25 @@ function changePoster(posterNo) {
     console.log(newPosterURL);
     let iframe1 = document.getElementById('screen1');
     iframe1.src = newPosterURL;
-    let iframe2 = document.getElementById('screen2');
-    iframe2.src = newPosterURL;
+   // let iframe2 = document.getElementById('screen2');
+   // iframe2.src = newPosterURL;
     // add an event when the iframe is loaded
     iframe1.onload = function () {
       updateIframes();
     }
-    iframe2.onload = function () {
-      updateIframes();
-    }
+   // iframe2.onload = function () {
+   //   updateIframes();
+   // }
   // handling counting 
-    clearInterval(incrementCounterInterval);
-    incrementCounterInterval = setInterval(incrementCounterDown, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
+   // clearInterval(incrementCounterInterval);
+  //  incrementCounterInterval = setInterval(incrementCounterDown, 2000); // Call incrementCounter every 1000 milliseconds (1 second)
 
   }
 }
 
 function incrementCounterDown() {
   let iframe1 = document.getElementById('screen1');
-  let iframe2 = document.getElementById('screen2');
+ // let iframe2 = document.getElementById('screen2');
 
   let message = {
     type: 'countDown',
@@ -124,12 +124,12 @@ function incrementCounterDown() {
   };
 
   iframe1.contentWindow.postMessage(message, '*');
-  iframe2.contentWindow.postMessage(message, '*');
+ // iframe2.contentWindow.postMessage(message, '*');
   console.log("incrementing counter")
 }
 function incrementCounterUp() {
   let iframe1 = document.getElementById('screen1');
-  let iframe2 = document.getElementById('screen2');
+ // let iframe2 = document.getElementById('screen2');
 
   let message = {
     type: 'countUp',
@@ -139,14 +139,14 @@ function incrementCounterUp() {
   };
 
   iframe1.contentWindow.postMessage(message, '*');
-  iframe2.contentWindow.postMessage(message, '*');
+  //iframe2.contentWindow.postMessage(message, '*');
   console.log("incrementing counter")
 }
 
 
 // keyPress event
-document.addEventListener('keydown', function (event) {
-
+//document.addEventListener('keydown', function (event) {
+/*
   // if uparrow used, increment counter
   if (event.code == "ArrowUp") {
     clearInterval(incrementCounterInterval);
@@ -158,7 +158,8 @@ document.addEventListener('keydown', function (event) {
     incrementCounterDown();
     }
   }
-);
+    */
+//);
 
 
 function pickPoster(number) {
@@ -177,10 +178,10 @@ function transition(posterNo) {
 
     let iframe1 = document.getElementById('screen1');
 
-    let iframe2 = document.getElementById('screen2');
+    //let iframe2 = document.getElementById('screen2');
 
     fadeOut(iframe1, posterNo);
-    fadeOut(iframe2, posterNo);
+    //fadeOut(iframe2, posterNo);
   } catch (e) {
     console.log("transition failed " + e)
   }
@@ -255,6 +256,6 @@ window.addEventListener('click', function(event) {
   console.log('Click detected in parent window');
   // make fullscreen
   document.documentElement.requestFullscreen();
-  
+
 
 });

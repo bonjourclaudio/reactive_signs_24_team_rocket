@@ -68,7 +68,7 @@ export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled)
   mainP5Sketch = p5Instance;
   mainP5Sketch.mousePressed = function () {
 
-    if (mouseButton === LEFT && !exhibitionMode) {
+    if (mouseButton === LEFT) {
       if (mainP5Sketch.mouseX > 0 && mainP5Sketch.mouseY > 0 && mainP5Sketch.mouseX < width && mainP5Sketch.mouseY < height) {
         openFullscreen();
       }
