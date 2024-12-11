@@ -42,7 +42,7 @@ function drawNum(objModel) {
     shininess(200);
     specularMaterial(50);
     metalness(100);
-    imageLight(reflectionImg2);
+    imageLight(reflectionImg);
 
 
     // flip model upside down
@@ -54,7 +54,7 @@ function drawNum(objModel) {
     scale(scaleFactor * 2);
 
     // rotate model to face viewer
-    let targetAngle = map(poster.posNormal.x, 0, 1, -PI / 4, PI / 4);
+    let targetAngle = map(poster.posNormal.x, 0, 1, PI / 4, -PI / 4);
     rotateY(targetAngle);
 
     // rotate model over itself for just under one second
