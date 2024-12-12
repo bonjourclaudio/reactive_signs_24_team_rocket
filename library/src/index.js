@@ -139,7 +139,7 @@ export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled)
 
   // counter 
 
-  incrementCounterInterval = setInterval(incrementCounter, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
+  incrementCounterInterval = setInterval(incrementCounter, 2000); // Call incrementCounter every 1000 milliseconds (1 second)
 }
 
 // mouse click
