@@ -1,65 +1,55 @@
-
-let rotationHistory = [];
 let font;
-function preload() {  
-  // load the font
-  font = loadFont('barlow_condensed.otf');  
+function preload() {
+ font = loadFont('barlow_condensed.otf')
+//  font = loadFont('inconsolata.otf');
 }
+
 function setup() {
-  /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight()); // Don't remove this line. 
- /*important!*/ poster.setup(this, "/Poster_Templates/libraries/assets/models/movenet/model.json");  // Don't remove this line. 
+   /*important!*/ createCanvas(poster.getWindowWidth(), poster.getWindowHeight()); // Don't remove this line. 
+  /*important!*/ poster.setup(this,  "/Poster_Templates/libraries/assets/models/movenet/model.json");  // Don't remove this line. 
+  //textAlign(CENTER);
   textFont(font);
+  textSize(15 * poster.vw);
+  poster.setDebug(false);
 }
 
 function draw() {
-  background(0,255,0);
-  fill(255);
-  wordEffect(poster.getCounter(), width / 2, height / 2);
+  background(0,0,0,70);
+	fill(255);
+  strokeWeight(1);
+  stroke(100);
+  let spacingX = width/20;
+  let spacingY = height/35;
+
+  for(let i=0;i<40;i++) {
+    let x = spacingX*i 
+    line(x,0,x,height)
+  }
+  for(let i=0;i<35;i++) {
+    let y = spacingY*i 
+    line(0,y,width,y)
+  }
+  textAlign(CENTER);
+  wordEffect("REACTIVE SIGNS \n 2024", poster.screens[0].cntX, poster.screens[0].cntY);
 /*important!*/ poster.posterTasks(); // do not remove this last line!  
 }
 
 function windowScaled() { // this is a custom event called whenever the poster is scaled
-  textSize(10 * poster.vw);
+  textSize(20 * poster.vw);
 }
 
 function wordEffect(word, x, y) {
-
-  let size = 1;
+  let bbox = font.textBounds(word, 0, 0, textSize());
   push()
-  translate(x, y)
-  let rotation = (-PI * 0.25) + (poster.posNormal.x * 0.5 * PI)
-
-  // find the center point of the textObject
-  let maxSteps = 40;
-  let maxSize = 600 * poster.vw
-  let minSize = 80 * poster.vw
-  let stepSize = abs(maxSize- minSize) / maxSteps;
-  let colorStep = (255 / maxSteps);
-  textSize(minSize);
- // translate((-(bbox.x)/2)-(bbox.w/2), (-(bbox.y)/2)+(bbox.h/2));
-
-  // the background letters 
-  for (let i = 0; i < rotationHistory.length; i++) {
-    fill(colorStep*i);
-    push()  
-    
-    rotate(rotationHistory[i].rotation);
-    size = maxSize-(stepSize*(i)) + Math.min(maxSize,minSize);
-    textSize(size);
-    let bbox = font.textBounds(rotationHistory[i].char, 0, 0);
-    translate((-(bbox.x)/2)-(bbox.w/2), +(bbox.h/2));
-    text(rotationHistory[i].char, 0, 0)
-    pop();
-  }
-
-  historyObject = {rotation: rotation, char: ""+word}
-  rotationHistory.push(historyObject);
-  pop();
-  if (rotationHistory.length > maxSteps) {
-    rotationHistory.shift();
-  }
-  noFill();
-
+  translate(x, y);
+  let angle = constrain(poster.posNormal.x,0.2,0.8);
+  angle = map(angle,0.2,0.8,0,1);
+  angle = angle * 0.5 * PI
+  angle -= PI/4 // make sure it's the right way up when tracker is mid screen
+  rotate(angle);
+  //rect(bbox.x, bbox.y, bbox.w, bbox.h);
+  text(word,0,0)
+  pop()
 }
 
 
