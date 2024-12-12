@@ -7,6 +7,6 @@ Poster_Templates/team_rocket
 
 
 ## Final Poster
-Poster_Templates/team_rocket/v5
+Poster_Templates/team_rocket/v7
 
-![small_final_poster](https://github.com/user-attachments/assets/5d689039-9bc5-4c1d-b17b-d0ebc2e3f63d)
+<tbd>
