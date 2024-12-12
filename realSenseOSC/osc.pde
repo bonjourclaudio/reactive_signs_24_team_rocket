@@ -10,7 +10,7 @@ void sendPImage(PImage image, PImage rgbImage, PVector pos, boolean tracking, St
   }
 
   msg.add(depthBuffer);
-  msg.add(pos.x);
+  msg.add(1.0-pos.x);
   msg.add(pos.y);
   msg.add(pos.z);
   msg.add(int(tracking));

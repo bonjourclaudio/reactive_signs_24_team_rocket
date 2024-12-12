@@ -259,10 +259,9 @@ export function getCounter() {
 
 
 export function posterTasks() {
-
   if (poses != undefined && Settings.poseDetection == true) {
     handlePosenet();
-  } else if (window.performance.now() - lastOSC < 1000 && realsensePos != undefined) {
+  } else if (window.performance.now() - lastOSC < 2000 && realsensePos != undefined) {
     oscSignal = true;
     // realsense data available over osc
     updatePosition(realsensePos.x, realsensePos.y, realsensePos.z)
