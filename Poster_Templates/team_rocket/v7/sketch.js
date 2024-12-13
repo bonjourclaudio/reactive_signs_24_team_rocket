@@ -3,7 +3,7 @@ let font, reflectionImg, spikeObj;
 
 function preload() {
     font = loadFont('barlow_condensed.otf');
-    reflectionImg = loadImage('./assets/scape.jpg')
+    reflectionImg = loadImage('./assets/scape_bw.jpg')
     reflectionImg2 = loadImage('./assets/texture.gif')
 
     for (let i = 0; i < 10; i++) {
@@ -76,7 +76,7 @@ function updateGeometry(geometry) {
 
         // Cone Size
 
-        let coneLength = map(abs(poster.posNormal.x - 0.5), 0, 0.5, 0, 10);
+        let coneLength = map(abs(poster.posNormal.x - 0.5), 0, 0.5, 0, 15);
         let coneRadius = 0.25;  // Radius of the cone base
 
         push();
