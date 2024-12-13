@@ -445,7 +445,7 @@ void findPositions(PImage depthImage) {
       yAverage = yAverage/count;
       zAverage = zAverage/count;
       point.set(xAverage, yAverage, zAverage);
-      filterRatio = 0.95;
+      filterRatio = 0.90;
 
       // find closest match from new blobs to average
       int[] indexOrder = new int[multiPointTemp.size()];
@@ -496,7 +496,7 @@ void findPositions(PImage depthImage) {
         // delay before setting active to false
         trackingAtive = false;
       }
-      filterRatio = 0.98;
+      filterRatio = 0.90;
     }
   } else {
     // remove all points

@@ -139,7 +139,7 @@ export function setup(p5Instance, modelURL, _enableDepth, _animationLoopEnabled)
 
   // counter 
 
-  incrementCounterInterval = setInterval(incrementCounter, 1000); // Call incrementCounter every 1000 milliseconds (1 second)
+  incrementCounterInterval = setInterval(incrementCounter, 2000); // Call incrementCounter every 1000 milliseconds (1 second)
 }
 
 // mouse click
@@ -259,10 +259,9 @@ export function getCounter() {
 
 
 export function posterTasks() {
-
   if (poses != undefined && Settings.poseDetection == true) {
     handlePosenet();
-  } else if (window.performance.now() - lastOSC < 1000 && realsensePos != undefined) {
+  } else if (window.performance.now() - lastOSC < 2000 && realsensePos != undefined) {
     oscSignal = true;
     // realsense data available over osc
     updatePosition(realsensePos.x, realsensePos.y, realsensePos.z)

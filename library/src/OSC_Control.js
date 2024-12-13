@@ -38,6 +38,8 @@ export function setUpOSC(depthEnabled) {
       console.log("Could not connect: " + e);
     }
 
+    console.log("port open");
+
     if (enableRGBStream) {
       let OSCdepthH = 140 ;
       let OSCdepthW = 160 ;
@@ -68,7 +70,7 @@ function updateOSC() {
   
  
   function refreshData(msg) {
-    lastOSC = millis();
+    lastOSC = window.performance.now();
   //  updatePosition(msg.args[3], msg.args[4], msg.args[5]);
     realsensePos = {x:msg.args[3], y:msg.args[4], z:msg.args[5]}
     // depth data
